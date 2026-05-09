@@ -1,0 +1,18 @@
+services:
+  prompt-evaluator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: prompt-evaluator
+    ports:
+      - "3004:3000"
+    command: npm run start:debug
+    volumes:
+      - ./:/usr/src/app
+    networks:
+      - optimization_network
+
+networks:
+  optimization_network:
+    name: optimization_network
+    external: true
