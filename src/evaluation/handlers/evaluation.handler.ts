@@ -42,7 +42,6 @@ export class EvaluationHandler {
       runId: event.runId,
       userId: event.userId,
       generatedPrompt: event.generatedPrompt,
-      generationModel: event.model,
       evaluationModel: runResult.model,
       actualOutput: runResult.output,
       quality: qualityResult.quality,
