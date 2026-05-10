@@ -45,9 +45,6 @@ export class PromptResult {
   @Prop({ required: true, name: 'generated_prompt' })
   generatedPrompt: string;
 
-  @Prop({ required: true, name: 'generation_model' })
-  generationModel: string;
-
   @Prop({ name: 'evaluation_model' })
   evaluationModel?: string;
 

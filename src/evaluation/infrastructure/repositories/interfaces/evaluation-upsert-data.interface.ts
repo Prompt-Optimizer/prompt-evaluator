@@ -8,7 +8,6 @@ export interface EvaluationUpsertData {
   runId: string;
   userId: string;
   generatedPrompt: string;
-  generationModel: string;
   evaluationModel: string;
   actualOutput: string;
   quality: number;
