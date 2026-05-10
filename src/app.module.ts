@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { ConfigModule, ConfigService } from './config';
-import { RunnerModule } from './runner/runner.module';
+import { EvaluationModule } from './evaluation/evaluation.module';
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { RunnerModule } from './runner/runner.module';
       }),
       inject: [ConfigService],
     }),
-    RunnerModule,
+    EvaluationModule,
   ],
 })
 export class AppModule {}

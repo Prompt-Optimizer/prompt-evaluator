@@ -1,25 +1,23 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { RmqModule } from '@prompt-optimizer/common-lib/rmq';
 import { RmqTopologyModule } from '@prompt-optimizer/common-lib/rmq-topology';
 
 import { ConfigModule, ConfigService } from '@app/config';
+import { QualityModule } from '@app/quality/quality.module';
+import { RunnerModule } from '@app/runner/runner.module';
 
-import { ROUTING_KEYS } from './constants';
-import { PromptGeneratedHandler } from './handlers';
-import { PROMPT_EVALUATION_PUBLISHER, PromptEvaluationEventPublisher } from './infrastructure';
+import { PROMPT_EVALUATION_PUBLISHER, ROUTING_KEYS } from './constants';
+import { EvaluationHandler } from './handlers';
+import { PromptEvaluationEventPublisher, PromptResult, PromptResultRepository, PromptResultSchema } from './infrastructure';
 import { EvaluationRmqController } from './ui';
 
 @Module({
   imports: [
     ConfigModule,
-    RmqModule.registerAsync({
-      token: PROMPT_EVALUATION_PUBLISHER,
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        url: config.rmq.promptEvaluation.url,
-        exchange: config.rmq.promptEvaluation.exchange,
-      }),
-    }),
+    RunnerModule,
+    QualityModule,
+    MongooseModule.forFeature([{ name: PromptResult.name, schema: PromptResultSchema }]),
     RmqTopologyModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -34,8 +32,16 @@ import { EvaluationRmqController } from './ui';
         ],
       }),
     }),
+    RmqModule.registerAsync({
+      token: PROMPT_EVALUATION_PUBLISHER,
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        url: config.rmq.promptEvaluation.url,
+        exchange: config.rmq.promptEvaluation.exchange,
+      }),
+    }),
   ],
   controllers: [EvaluationRmqController],
-  providers: [PromptGeneratedHandler, PromptEvaluationEventPublisher],
+  providers: [EvaluationHandler, PromptResultRepository, PromptEvaluationEventPublisher],
 })
 export class EvaluationModule {}

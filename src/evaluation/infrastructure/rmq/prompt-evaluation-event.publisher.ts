@@ -2,9 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import type { PromptEvaluatedEvent } from '@prompt-optimizer/common-lib/events';
 import { RmqPublisher } from '@prompt-optimizer/common-lib/rmq';
 
-import { ROUTING_KEYS } from '../../constants';
-
-import { PROMPT_EVALUATION_PUBLISHER } from './constants/rmq.tokens';
+import { PROMPT_EVALUATION_PUBLISHER, ROUTING_KEYS } from '../../constants';
 
 @Injectable()
 export class PromptEvaluationEventPublisher {
