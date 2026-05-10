@@ -1,1 +1,1 @@
-export { PromptGeneratedHandler } from './prompt-generated.handler';
+export { EvaluationHandler } from './evaluation.handler';

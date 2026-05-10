@@ -1,0 +1,30 @@
+# Model pricing (USD per 1M tokens)
+# Format: model_name | input_cost_per_1M | cached_input_cost_per_1M | output_cost_per_1M
+#
+# TODO: In the future, add a cron job (e.g. daily at 00:00 UTC) that fetches
+# current pricing from provider APIs and updates this data automatically.
+# Consider storing in a database table instead of a flat file once the cron is in place.
+
+# OpenAI (cached = ~10-50% of input depending on model)
+gpt-5.5 | 5.00 | 0.50 | 30.00
+gpt-5.4-mini | 0.75 | 0.075 | 4.50
+gpt-5.4-nano | 0.20 | 0.02 | 1.25
+gpt-5 | 1.25 | 0.125 | 10.00
+gpt-5-mini | 0.25 | 0.025 | 2.00
+gpt-4.1 | 2.00 | 0.50 | 8.00
+gpt-4.1-mini | 0.40 | 0.10 | 1.60
+gpt-4.1-nano | 0.10 | 0.025 | 0.40
+gpt-4o | 2.50 | 1.25 | 10.00
+gpt-4o-mini | 0.15 | 0.075 | 0.60
+
+# Anthropic (cached = 10% of input)
+claude-opus-4-7 | 5.00 | 0.50 | 25.00
+claude-sonnet-4-6 | 3.00 | 0.30 | 15.00
+claude-sonnet-4-5 | 3.00 | 0.30 | 15.00
+claude-haiku-4-5 | 1.00 | 0.10 | 5.00
+
+# Google Gemini (cached = 25% of input)
+gemini-2.5-pro | 1.25 | 0.3125 | 10.00
+gemini-2.5-flash | 0.15 | 0.0375 | 0.60
+gemini-2.5-flash-lite | 0.10 | 0.025 | 0.40
+gemini-2.0-flash | 0.075 | 0.01875 | 0.30
