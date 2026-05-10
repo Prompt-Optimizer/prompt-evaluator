@@ -1,9 +1,19 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 
-import { ConfigModule } from './config';
-import { EvaluationModule } from './evaluation/evaluation.module';
+import { ConfigModule, ConfigService } from './config';
+import { RunnerModule } from './runner/runner.module';
 
 @Module({
-  imports: [ConfigModule, EvaluationModule],
+  imports: [
+    ConfigModule,
+    MongooseModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.mongo.uri,
+      }),
+      inject: [ConfigService],
+    }),
+    RunnerModule,
+  ],
 })
 export class AppModule {}
