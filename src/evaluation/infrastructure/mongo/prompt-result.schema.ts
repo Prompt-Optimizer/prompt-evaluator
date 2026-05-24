@@ -33,10 +33,10 @@ export class CostMetrics {
   },
 })
 export class PromptResult {
-  @Prop({ required: true, unique: true, index: true, name: 'prompt_id' })
+  @Prop({ required: true, name: 'prompt_id' })
   promptId: string;
 
-  @Prop({ required: true, index: true, name: 'run_id' })
+  @Prop({ required: true, name: 'run_id' })
   runId: string;
 
   @Prop({ required: true, name: 'user_id' })
@@ -67,4 +67,5 @@ export class PromptResult {
 export type PromptResultDocument = HydratedDocument<PromptResult>;
 export const PromptResultSchema = SchemaFactory.createForClass(PromptResult);
 
+PromptResultSchema.index({ prompt_id: 1 }, { unique: true });
 PromptResultSchema.index({ run_id: 1, score: -1 });
