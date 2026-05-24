@@ -54,9 +54,6 @@ export class PromptResult {
   @Prop()
   quality?: number;
 
-  @Prop()
-  score?: number;
-
   @Prop({ type: CostMetrics, required: true, name: 'generation_metrics' })
   generationMetrics: CostMetrics;
 
@@ -70,4 +67,4 @@ export class PromptResult {
 export type PromptResultDocument = HydratedDocument<PromptResult>;
 export const PromptResultSchema = SchemaFactory.createForClass(PromptResult);
 
-PromptResultSchema.index({ runId: 1, score: -1 });
+PromptResultSchema.index({ run_id: 1, score: -1 });
