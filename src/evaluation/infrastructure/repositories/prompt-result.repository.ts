@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 
 import { PromptResult, type PromptResultDocument } from '../mongo';
 
-import type { EvaluationUpsertData } from './interfaces';
+import type { CostMetricsData, EvaluationUpsertData } from './interfaces';
 
 @Injectable()
 export class PromptResultRepository {
@@ -25,12 +25,24 @@ export class PromptResultRepository {
           evaluation_model: data.evaluationModel,
           actual_output: data.actualOutput,
           quality: data.quality,
-          generation_metrics: data.generationMetrics,
-          run_metrics: data.runMetrics,
-          scoring_metrics: data.scoringMetrics,
+          generation_metrics: this.toMetricsDoc(data.generationMetrics),
+          run_metrics: this.toMetricsDoc(data.runMetrics),
+          ...(data.scoringMetrics && { scoring_metrics: this.toMetricsDoc(data.scoringMetrics) }),
         },
       },
       { upsert: true },
     );
+  }
+
+  private toMetricsDoc(metrics: CostMetricsData) {
+    return {
+      token_usage: {
+        input: metrics.tokenUsage.input,
+        output: metrics.tokenUsage.output,
+        cached_input: metrics.tokenUsage.cachedInput,
+      },
+      cost: metrics.cost,
+      execution_time_ms: metrics.executionTimeMs,
+    };
   }
 }
