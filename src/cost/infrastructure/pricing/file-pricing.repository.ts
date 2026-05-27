@@ -20,7 +20,7 @@ export class FilePricingRepository implements PricingRepository, OnModuleInit {
   }
 
   private stripDateSuffix(model: string): string {
-    return model.replace(/-\d{4}-\d{2}-\d{2}$/, '');
+    return model.replace(/-\d{4}-?\d{2}-?\d{2}$/, '');
   }
 
   private load(): void {
