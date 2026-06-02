@@ -38,7 +38,9 @@ export class EvaluationHandler {
         }
       : EMPTY_METRICS;
 
-    await this.repository.upsertEvaluation(event.promptId, {
+    await this.repository.saveEvaluation({
+      testId: event.testId,
+      promptId: event.promptId,
       runId: event.runId,
       userId: event.userId,
       generatedPrompt: event.generatedPrompt,
@@ -62,6 +64,7 @@ export class EvaluationHandler {
       runId: event.runId,
       userId: event.userId,
       timestamp: new Date().toISOString(),
+      testId: event.testId,
       promptId: event.promptId,
       evaluationModel: runResult.model,
       quality: qualityResult.quality,
