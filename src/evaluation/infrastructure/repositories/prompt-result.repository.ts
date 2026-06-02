@@ -15,7 +15,7 @@ export class PromptResultRepository {
 
   async upsertEvaluation(promptId: string, data: EvaluationUpsertData): Promise<void> {
     await this.model.collection.updateOne(
-      { prompt_id: promptId },
+      { prompt_id: promptId, evaluation_model: data.evaluationModel },
       {
         $set: {
           prompt_id: promptId,

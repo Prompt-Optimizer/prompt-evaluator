@@ -63,6 +63,7 @@ export class EvaluationHandler {
       userId: event.userId,
       timestamp: new Date().toISOString(),
       promptId: event.promptId,
+      evaluationModel: runResult.model,
       quality: qualityResult.quality,
       metadata: {
         tokenUsage: runResult.tokenUsage,
