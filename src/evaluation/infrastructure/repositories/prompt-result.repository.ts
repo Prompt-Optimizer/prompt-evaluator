@@ -13,25 +13,20 @@ export class PromptResultRepository {
     private readonly model: Model<PromptResultDocument>,
   ) {}
 
-  async upsertEvaluation(promptId: string, data: EvaluationUpsertData): Promise<void> {
-    await this.model.collection.updateOne(
-      { prompt_id: promptId, evaluation_model: data.evaluationModel },
-      {
-        $set: {
-          prompt_id: promptId,
-          run_id: data.runId,
-          user_id: data.userId,
-          generated_prompt: data.generatedPrompt,
-          evaluation_model: data.evaluationModel,
-          actual_output: data.actualOutput,
-          quality: data.quality,
-          generation_metrics: this.toMetricsDoc(data.generationMetrics),
-          run_metrics: this.toMetricsDoc(data.runMetrics),
-          ...(data.scoringMetrics && { scoring_metrics: this.toMetricsDoc(data.scoringMetrics) }),
-        },
-      },
-      { upsert: true },
-    );
+  async saveEvaluation(data: EvaluationUpsertData): Promise<void> {
+    await this.model.collection.insertOne({
+      test_id: data.testId,
+      prompt_id: data.promptId,
+      run_id: data.runId,
+      user_id: data.userId,
+      generated_prompt: data.generatedPrompt,
+      evaluation_model: data.evaluationModel,
+      actual_output: data.actualOutput,
+      quality: data.quality,
+      generation_metrics: this.toMetricsDoc(data.generationMetrics),
+      run_metrics: this.toMetricsDoc(data.runMetrics),
+      ...(data.scoringMetrics && { scoring_metrics: this.toMetricsDoc(data.scoringMetrics) }),
+    });
   }
 
   private toMetricsDoc(metrics: CostMetricsData) {

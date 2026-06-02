@@ -5,6 +5,8 @@ export interface CostMetricsData {
 }
 
 export interface EvaluationUpsertData {
+  testId: string;
+  promptId: string;
   runId: string;
   userId: string;
   generatedPrompt: string;
