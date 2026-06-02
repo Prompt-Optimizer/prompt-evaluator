@@ -8,6 +8,9 @@ import { EventMetadataDto } from './event-metadata.dto';
 
 export class PromptGeneratedEventDto extends BaseEventDto implements PromptGeneratedEvent {
   @IsUUID()
+  testId: string;
+
+  @IsUUID()
   promptId: string;
 
   @IsString()
