@@ -67,5 +67,5 @@ export class PromptResult {
 export type PromptResultDocument = HydratedDocument<PromptResult>;
 export const PromptResultSchema = SchemaFactory.createForClass(PromptResult);
 
-PromptResultSchema.index({ prompt_id: 1 }, { unique: true });
+PromptResultSchema.index({ prompt_id: 1, evaluation_model: 1 }, { unique: true });
 PromptResultSchema.index({ run_id: 1, score: -1 });
